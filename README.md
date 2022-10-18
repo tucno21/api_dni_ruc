@@ -39,7 +39,7 @@ public function jsonSerialize(): mixed
 
 cambiar el archivo env a .env
 
-modificar el url y conección a mysql
+modificar la url y conección a mysql
 
 ```
 APP_URL=https://apiconsulta.test/
