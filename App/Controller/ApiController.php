@@ -14,6 +14,11 @@ class ApiController extends Controller
 
     public function index()
     {
+        header("Access-Control-Allow-Origin: *");
+        // header('Access-Control-Allow-Credentials: true');
+        // header('Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS');
+        // header("Access-Control-Allow-Headers: X-Requested-With");
+        // header('Content-Type: text/html; charset=utf-8');
         //https://api_dni_ruc.test/consulta?ruc=2045245853
         $data = $this->request()->getInput();
 
@@ -21,25 +26,31 @@ class ApiController extends Controller
             if ($data->dni != '' && strlen($data->dni) == 8) {
                 $dni = $data->dni;
                 $result =  $this->dniGet($dni);
+                //enviar http response
+
                 echo json_encode($result);
+                exit;
             } else {
                 $data = [
                     'success' => false,
                     'message' => 'El DNI debe tener 8 dígitos'
                 ];
                 echo json_encode($data);
+                exit;
             }
         } else if (isset($data->ruc)) {
             if ($data->ruc != '' && strlen($data->ruc) == 11) {
                 $ruc = $data->ruc;
                 $result = $this->rucGet($ruc);
                 echo json_encode($result);
+                exit;
             } else {
                 $data = [
                     'success' => false,
                     'message' => 'El RUC debe tener 11 dígitos'
                 ];
                 echo json_encode($data);
+                exit;
             }
         } else {
             $data = [
@@ -47,6 +58,7 @@ class ApiController extends Controller
                 'message' => 'No se encontró el parámetro de consulta'
             ];
             echo json_encode($data);
+            exit;
         }
     }
 
